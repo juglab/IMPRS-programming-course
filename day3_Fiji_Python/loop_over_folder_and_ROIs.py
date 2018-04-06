@@ -2,6 +2,8 @@ from ij import IJ
 from ij import Prefs
 from java.io import File
 from ij.measure import ResultsTable
+from ij.plugin.frame import RoiManager
+from ij.plugin import Duplicator
 
 # configuration
 folder = "C:/structure/code/IMPRS-programming-course/day3_Fiji_Python/data";
@@ -21,6 +23,8 @@ for file in listOfFilesInFolder:
 		# load image and show it
 		imp = IJ.openImage(file.toString());
 		imp.show();
+
+		copy = Duplicator().run(imp);
 	
 		# apply a threshold to detect objects (cells, nuclei,...)
 		IJ.setAutoThreshold(imp, "Otsu");
@@ -31,8 +35,29 @@ for file in listOfFilesInFolder:
 		IJ.run("Set Measurements...", "area display redirect=None decimal=5");
 		IJ.run(imp, "Analyze Particles...", "exclude add");
 
-		# dirty hack to make the program stop here:
-		x = 1 / 0
+		manager = RoiManager.getRoiManager();
+
+		for roi in manager.getRoisAsArray():
+			copy.setRoi(roi);
+			copy.show();
+			IJ.run(copy, "Enlarge...", "enlarge=-2");
+			
+			# analyse the image
+			statistics = copy.getStatistics();
+			print("mean: " + str(statistics.mean));
+			print("area:" +  str(statistics.area));
+
+			# write the analysed valurs in a table
+			table = ResultsTable.getResultsTable();
+			table.incrementCounter();
+			table.addValue("filename", file.toString());
+			table.addValue("mean_robert", statistics.mean);
+			table.addValue("area", statistics.area);
+			table.addValue("total instensity", statistics.mean * statistics.area);
+			table.show("Results");
+
+			# dirty hack to make the program stop here:
+			# x = 1 / 0
 
 
 # save the table
