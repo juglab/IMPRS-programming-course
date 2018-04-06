@@ -6,6 +6,12 @@ from ij.measure import ResultsTable
 # configuration
 folder = "C:/structure/code/IMPRS-programming-course/day3_Fiji_Python/data";
 
+
+# reset the table at the beginning
+table = ResultsTable.getResultsTable();
+table.reset()
+
+
 # access to the folder and the files in it
 directory = File(folder);
 listOfFilesInFolder = directory.listFiles();
