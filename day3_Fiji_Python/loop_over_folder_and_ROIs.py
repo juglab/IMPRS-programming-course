@@ -13,6 +13,14 @@ folder = "C:/structure/code/IMPRS-programming-course/day3_Fiji_Python/data";
 table = ResultsTable.getResultsTable();
 table.reset()
 
+# reset the ROI manager
+manager = RoiManager.getRoiManager();
+manager.reset();
+
+
+IJ.run("Close All", "");
+
+
 
 # access to the folder and the files in it
 directory = File(folder);
@@ -36,6 +44,7 @@ for file in listOfFilesInFolder:
 		IJ.run(imp, "Analyze Particles...", "exclude add");
 
 		manager = RoiManager.getRoiManager();
+		manager.runCommand("Save", file.toString() + ".RoiSet.zip");
 
 		for roi in manager.getRoisAsArray():
 			copy.setRoi(roi);
@@ -68,6 +77,7 @@ table.reset()
 		
 
 	
+IJ.run("Close All", "");
 
 
 
