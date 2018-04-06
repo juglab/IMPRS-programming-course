@@ -24,12 +24,12 @@ for file in listOfFilesInFolder:
 		# analyse objects and put results in table
 		IJ.run("Set Measurements...", "area display redirect=None decimal=5");
 		IJ.run(imp, "Analyze Particles...", "display exclude");
-		
-		# save the table
-		table = ResultsTable.getResultsTable();
-		table.show("Results");
-		table.save(file.toString() + "results.xls");
-		table.reset()
+
+# save the table
+table = ResultsTable.getResultsTable();
+table.show("Results");
+table.save(folder + "results.xls");
+table.reset()
 		
 
 	
