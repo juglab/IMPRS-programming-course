@@ -25,7 +25,10 @@ for file in listOfFilesInFolder:
 	IJ.run("Set Measurements...", "area display redirect=None decimal=5");
 	IJ.run(imp, "Analyze Particles...", "display exclude");
 	
-
+	table = ResultsTable.getResultsTable();
+	table.save(folder + "results.xls");
+	
+	
 
 
 
